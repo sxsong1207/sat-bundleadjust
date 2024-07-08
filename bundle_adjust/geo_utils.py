@@ -24,9 +24,11 @@ def utm_from_latlon(lats, lons):
     convert lat-lon to utm
     """
     n = utm.latlon_to_zone_number(lats[0], lons[0])
-    l = utm.latitude_to_zone_letter(lats[0])
+    # l = utm.latitude_to_zone_letter(lats[0])
+    # l = "N" if lats[0] >= 0 else "S" # SxS: utm package changes the zone letter to grid convention. But here we need N or S.
+    hemisphere = "" if lats[0] >= 0 else "+south"
     proj_src = pyproj.Proj("+proj=latlong")
-    proj_dst = pyproj.Proj("+proj=utm +zone={}{}".format(n, l))
+    proj_dst = pyproj.Proj("+proj=utm +zone={} {}".format(n, hemisphere))
     easts, norths = pyproj.transform(proj_src, proj_dst, lons, lats)
     return easts, norths
 
@@ -36,7 +38,8 @@ def zonestring_from_lonlat(lon, lat):
     return utm zone string from lon-lat point
     """
     n = utm.latlon_to_zone_number(lat, lon)
-    l = utm.latitude_to_zone_letter(lat)
+    # l = utm.latitude_to_zone_letter(lat)
+    l = "N" if lat >= 0 else "S" # SxS: utm package changes the zone letter to grid convention. But here we need N or S.
     s = "%d%s" % (n, l)
     return s
 
@@ -59,7 +62,9 @@ def lonlat_from_utm(easts, norths, zonestring):
     """
     convert utm to lon-lat
     """
-    proj_src = pyproj.Proj("+proj=utm +zone=%s" % zonestring)
+    l = zonestring[-1]
+    
+    proj_src = pyproj.Proj(f"+proj=utm +zone={zonestring[:-1]} {'' if l == 'N' else '+south'}")
     proj_dst = pyproj.Proj("+proj=latlong")
     return pyproj.transform(proj_src, proj_dst, easts, norths)
 

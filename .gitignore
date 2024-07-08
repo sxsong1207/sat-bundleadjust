@@ -7,3 +7,4 @@ data/*
 *.so
 *.o
 *.egg-info
+tests/config1_output

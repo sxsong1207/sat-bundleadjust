@@ -1,21 +1,19 @@
-setuptools<=58
-ad
+setuptools
 ipyleaflet
 ipywidgets
 matplotlib
 numba
 numpy
-opencv-contrib-python
-rpcm @ git+https://github.com/cmla/rpcm.git@localization-origin
+opencv-python
+rpcm
 scipy
 shapely
 networkx
 srtm4
 requests
-pyproj==3.0.1
+pyproj
 rasterio
 geojson
 utm
-ray
 joblib
 ransac
