@@ -41,7 +41,7 @@ def zonestring_from_lonlat(lon, lat):
     # l = utm.latitude_to_zone_letter(lat)
     l = "N" if lat >= 0 else "S" # SxS: utm package changes the zone letter to grid convention. But here we need N or S.
     s = "%d%s" % (n, l)
-    return s
+    return int(n)
 
 
 def epsg_code_from_utm_zone(utm_zonestring):

@@ -192,7 +192,7 @@ def load_image(path_to_geotiff, offset=None, equalize=False):
     """
     if offset is None:
         with rasterio.open(path_to_geotiff) as src:
-            im = src.read().astype(np.float)
+            im = src.read().astype(float)
     else:
         y0, x0, h, w = offset["row0"], offset["col0"], offset["height"], offset["width"]
         with rasterio.open(path_to_geotiff) as src:
